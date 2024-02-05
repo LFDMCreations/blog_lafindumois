@@ -248,21 +248,6 @@ Also append `require_relative "support/database_cleaner"` to `./spec/spec_helper
 
 :point_right: We will test the functioning when we start using database_cleaner.
 
-
-in `spec/support/database_cleaner.rb` and update `spec/spec_helper.rb`. 
-4. Enable migrations by appending code to the `Rakefile`.
-5. One `.env` file already exists. create a `.env.test` file at root and add it to `.gitignore`. 
-
-Add the database urls to .env and to .env.test. The syntax for the url is structured like this :
-
-DATABASE_URL=postgres://username:password@localhost:5432/lafindumois_blog_development.
-
-A password is not required. Therefore, this is valid syntax:
-DATABASE_URL=postgres://username@localhost:5432/lafindumois_blog_development.
-
-Obviously, the database url in the `./.env.test` file is postfixed `_test`, not `_development`.
-**The documentation shows how to run the hanami console and make sure that the app correctly reads the url. Do that.**
-
 ### Create databases, create migrations and run migrations. 
 
 With all this in place, we can start creating our migrations. The steps are:
@@ -275,7 +260,7 @@ With all this in place, we can start creating our migrations. The steps are:
 6. Add the ROM relation
 
 
-#### Create the databases ####
+#### Create and prepare the databases ####
 
 Easy. Connect to postgresql with `psql` and 
 ```
@@ -283,46 +268,38 @@ username=# CREATE DATABASE lafindumois_blog_development;
 username=# CREATE DATABASE lafindumois_blog_test;
 ```
 
-#### Add citext to the databases ####
-
 By personnal preference, I put constraints at database level. The migration create_authors checks for validity of emails through a regular expression. Postgresql uses the citext extension, which is not implemented by default. Connect to the databases with psql and add citext extension to both the development and the test databases with :
 ```
 CREATE EXTENSION IF NOT EXISTS citext;
 ```
 
+:bulb: It is good and safe practice to create a role in postgresql and to change the database ownership to that role. 
+
 #### Create the migration files ####
 
-A folder `/db/migrate` is created at root upon creation of the fist migration with:
-```
-> bundle exec rake db:create_migration\[create_authors\]
-> bundle exec rake db:create_migration\[create_administrators\]
-> bundle exec rake db:create_migration\[create_aricles\]
-> bundle exec rake db:create_migration\[create_messages\]
-```
-I use .zsh and therefore I need to escape the square brackets. 
+In a new folder `/db/migratations` create 4 files : `001_create_administrators.rb`,  `002_create_authors.rb` , `003_create_articles.rb` and `004_create_messages.rb`. Check in this repository what to put in those files. And, _please_, read the sequel migrations documentation.  
 
-#### Fill in the migration files ####
+_Sequel doesn't come with generators that create migrations for you,_ as per [the documentation](https://sequel.jeremyevans.net/rdoc/files/doc/migration_rdoc.html#label-Creating+a+migration). 
 
-Migrations are executed in the order they come. Therefore, an error occurs and the migration is (partially) aborted when calling a `foreign_key` in a `create_table` function, referencing a table that is created in a subsequent `create_table` function. See the file `./db/migrate/20240131203603_create_authors.rb` for an example of this. Likewise, the lines of code that create join tables must be placed after the code that creates each table.
+Migrations are executed in the order they come. Therefore, an error occurs and the migration is (partially) aborted when calling a `foreign_key` in a `create_table` function, referencing a table that is created in a subsequent `create_table` function. See the file `./db/migrate/002_create_authors.rb` for an example of this. Likewise, the lines of code that create join tables must be placed after the code that creates each table.
 
-Create all migrations. Be as complete as you can be. Although migrations allow altering the database structure by adding or removing tables or columns, the migration files provide helpful information on the database structure. Therefor, readibility of those files is important.
+Create all migrations. Be as complete as you can be. Although migrations allow altering the database structure by adding or removing tables or columns, the migration files provide helpful information on the database structure. Therefor, readibility of those files is important. As per the recommendation in the documentation: **you should not modify any migration that has been run on the database**.
 
 #### Run the migrations ####
 
 Run the migrations for the development environment and for the test environment with:
 
 ```
-> bundle exec rake db:migrate 
-> HANAMI_ENV=test bundle exec rake db:migrate
+> sequel -m db/migrations postgres://[database_owner]@[localhost]:[port_if_any]/[database_name]
+
 ```
 
-#### Add the ROM relations ####
 
-A final step: create the [ROM relations](https://rom-rb.org/learn/core/5.2/relations/).
 
-In `./lib/lafindumois_blog/persistence/relations` create the 4 files for the 4 relations that we'll be using. 
 
-**Wow !! That was quite a bit of work already! Looking forward to Hanami 2.1 that ships with persistence.**
+
+
+
 
 
 ## Add a first author ##
