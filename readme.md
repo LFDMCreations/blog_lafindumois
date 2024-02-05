@@ -206,7 +206,7 @@ development:
   password: my_password
 ```
 
-:bulb: **Tip:**  _There is no `production` section in `database.yml` as the uri in production is an environment variable on the production server. Please see `persistence.rb` for that._ 
+:bulb: _There is no `production` section in `database.yml` as the uri in production is an environment variable on the production server. Please see `persistence.rb` for that._ 
 
 2. require config.rb in `config.ru` by adding this in the beginning of that file: `require_relative './config/config'`.
 3. Let's make sure that our app is correctly picking up the database connexion. For that 
