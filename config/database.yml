@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: lafindumois_blog_development
+  username: lafindumois_development
+  password: Galinette1
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: lafindumois_blog_test
+  username: lafindumois_development
+  password: Galinette1
