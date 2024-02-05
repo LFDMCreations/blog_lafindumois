@@ -1,4 +1,5 @@
 require "database_cleaner-sequel"
+require_relative "../../config/config"
 
 # Hanami.app.prepare(:persistence)
 # DatabaseCleaner[:sequel, db: Hanami.app["persistence.db"]]

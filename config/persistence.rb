@@ -10,7 +10,7 @@ def root
     File.expand_path(File.dirname(__FILE__))
 end
 
-if APP_ENV == "development"
+if APP_ENV == "development" || APP_ENV == "test"
     DB = Sequel.connect(YAML.load_file(File.join(root,'database.yml'))[APP_ENV])
 else
     ## at Scalingo. To be replaced if you use another PaaS.

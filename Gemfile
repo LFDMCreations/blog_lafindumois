@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gem 'puma', '~> 6.4', '>= 6.4.2'
 gem "sinatra", "~> 4.0"
+gem 'sinatra-contrib', '~> 4.0'
 gem "pg", "~> 1.5"
 gem "sequel", "~> 5.77"
 

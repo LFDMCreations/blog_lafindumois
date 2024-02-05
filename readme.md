@@ -35,10 +35,11 @@ You should now have a Gemfile in with 2 lines in it. You can now add the webserv
 ❯ bundle add puma
 ```
 
-### Ruby gems
+### Ruby gems and the Gemfile
 
 Obviously, this app, like all ruby apps, uses many gems. In order to get the last version of each gem, make sure to go to [rubygems](https://rubygems.org/), check the gem out, read the documentation or at least the introduction to the documentation. 
 
+The Gemfile contains various sections, allowing the restriction of usage to testing and development. Please check how a Gemfile is structured and also add `gem 'sinatra-contrib', '~> 4.0'` which is a collection of commonly used and particularly helpful extensions for Sinatra that we will be using. 
 
 ## Use RSpec
 
@@ -295,7 +296,9 @@ Run the migrations for the development environment and for the test environment 
 
 ### Create models
 
-With this in place, we can start creating the `models`. 
+With this in place, we could start creating the `models`; but let's start writing a spec first, namely the spec for posting an author, i.e. create an author in the database. First do this in the database, because quite some constraints are there and we need to know what fields are required. Then, create a file `spec/request/post_author_spec.rb`. 
+
+
 
 
 

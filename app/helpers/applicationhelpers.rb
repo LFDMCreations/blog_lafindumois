@@ -1,5 +1,5 @@
 module ApplicationHelpers
-    
+=begin
     def json_status(code, *data)
       # this function receives 0 or 1 reason. NOT MORE THAN 1 REASON
       # typically, when status is 204, no reason is provided
@@ -9,7 +9,7 @@ module ApplicationHelpers
         :data => data[0]
       }.to_json
     end
-
+=end
 end
 
 class Object

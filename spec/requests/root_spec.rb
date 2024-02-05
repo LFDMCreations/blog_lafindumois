@@ -1,6 +1,7 @@
 require 'rack/test'
 require 'json'
 require_relative '../../app/main.rb'
+
 module LafindumoisBlog
     RSpec.describe 'Lafindumois blog api', type: :request do
         it 'says hi!' do
