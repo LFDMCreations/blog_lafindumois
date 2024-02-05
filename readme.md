@@ -253,12 +253,9 @@ Also append `require_relative "support/database_cleaner"` to `./spec/spec_helper
 With all this in place, we can start creating our migrations. The steps are:
 
 1. Create the databases
-2. Add citext to the databases
-3. Create the migration files
-4. Fill in the migration files
-5. Run the migration
-6. Add the ROM relation
-
+2. Create the migration files
+3. Fill in the migration files
+4. Run the migration
 
 #### Create and prepare the databases ####
 
@@ -283,7 +280,9 @@ _Sequel doesn't come with generators that create migrations for you,_ as per [th
 
 Migrations are executed in the order they come. Therefore, an error occurs and the migration is (partially) aborted when calling a `foreign_key` in a `create_table` function, referencing a table that is created in a subsequent `create_table` function. See the file `./db/migrate/002_create_authors.rb` for an example of this. Likewise, the lines of code that create join tables must be placed after the code that creates each table.
 
-Create all migrations. Be as complete as you can be. Although migrations allow altering the database structure by adding or removing tables or columns, the migration files provide helpful information on the database structure. Therefor, readibility of those files is important. As per the recommendation in the documentation: **you should not modify any migration that has been run on the database**.
+Create all migrations. Be as complete as you can be. Although migrations allow altering the database structure by adding or removing tables or columns, the migration files provide helpful information on the database structure. Therefor, readibility of those files is important. 
+
+In addition, as per the recommendation in the documentation: **you should not modify any migration that has been run on the database**.
 
 #### Run the migrations ####
 
@@ -294,7 +293,9 @@ Run the migrations for the development environment and for the test environment 
 
 ```
 
+### Create models
 
+With this in place, we can start creating the `models`. 
 
 
 
