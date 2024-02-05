@@ -238,10 +238,18 @@ Rack::Shell v1.0.1 started in development environment.
 
 This last command `DB` should print your database connextion. 
 
+4. Add the database_cleaner 
+
+Add `database_cleaner-sequel` to the `test` section of the Gemfile and run `bundle install`. 
+
+Then create a file `./spec/support/database_cleaner.rb`. The content of that file comes from [the documentation](https://github.com/DatabaseCleaner/database_cleaner?tab=readme-ov-file#rspec-example).
+
+Also append `require_relative "support/database_cleaner"` to `./spec/spec_helper.rb`. 
+
+:point_right: We will test the functioning when we start using database_cleaner.
 
 
-2. Update `config/settings.rb` 
-3. Add the database_cleaner in `spec/support/database_cleaner.rb` and update `spec/spec_helper.rb`. 
+in `spec/support/database_cleaner.rb` and update `spec/spec_helper.rb`. 
 4. Enable migrations by appending code to the `Rakefile`.
 5. One `.env` file already exists. create a `.env.test` file at root and add it to `.gitignore`. 
 

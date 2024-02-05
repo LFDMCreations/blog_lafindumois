@@ -1,7 +1,7 @@
 require "database_cleaner-sequel"
 
 # Hanami.app.prepare(:persistence)
-DatabaseCleaner[:sequel, db: Hanami.app["persistence.db"]]
+# DatabaseCleaner[:sequel, db: Hanami.app["persistence.db"]]
 DatabaseCleaner[:sequel].db = Sequel.connect('postgres://thiebo@localhost:5432/lafindumois_blog_test')
 
 RSpec.configure do |config|
