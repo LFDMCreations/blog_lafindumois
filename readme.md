@@ -166,6 +166,27 @@ Happy coding and see code implemented immediately without rebooting the app.
 
 Create a development section in the `Gemfile`, add `gem 'racksh', '~> 1.0', '>= 1.0.1'` and run bundle install. 
 
+You can start `racksh` by :
+
+```
+> racksh
+```
+
+Or, if you prefer classical `irb` for this:
+
+```
+❯ irb
+3.2.2 :001 > require 'racksh/irb'
+Rack::Shell v1.0.1 started in development environment.
+ => true
+```
+
+From within `racksh` you can check urls _(see racksh documentation for full explanations)_:
+
+```
+3.2.2 :002 > $rack.get '/'
+```
+
 ## What are we building? 
 
 Our app allows authors to write articles. Articles contain images and people may add comments to articles. The app also needs an administrator who can see all the authors and articles and can administer the application for all authors and moderate articles and comments. 
@@ -193,8 +214,6 @@ Run `bundle install`
 
 #### Add and alter files and environment variables
 
-
-
 1. Create a folder `./config` with 3 files : `config.rb`, `database.yml` and `persistence.rb`. 
 My `database.yml` is in `./gitignore` therefore not visible. It is structured like this:
 ```
@@ -209,7 +228,17 @@ development:
 :bulb: _There is no `production` section in `database.yml` as the uri in production is an environment variable on the production server. Please see `persistence.rb` for that._ 
 
 2. require config.rb in `config.ru` by adding this in the beginning of that file: `require_relative './config/config'`.
-3. Let's make sure that our app is correctly picking up the database connexion. For that 
+3. Let's make sure that our app is correctly picking up the database connexion. For that, start a `racksh` session :
+
+```
+❯ racksh
+Rack::Shell v1.0.1 started in development environment.
+>> DB
+```
+
+This last command `DB` should print your database connextion. 
+
+
 
 2. Update `config/settings.rb` 
 3. Add the database_cleaner in `spec/support/database_cleaner.rb` and update `spec/spec_helper.rb`. 

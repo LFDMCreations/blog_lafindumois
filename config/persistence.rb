@@ -1,6 +1,5 @@
 require 'yaml'
 require 'sequel'
-require 'require_all'
 require 'bundler/setup'
 
 APP_ENV = ENV["RACK_ENV"] || "development"

@@ -1,1 +1,1 @@
-require_relative './persistence.rb'
+require_relative 'persistence.rb'
