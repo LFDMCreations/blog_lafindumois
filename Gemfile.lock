@@ -8,6 +8,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
       sequel
     diff-lcs (1.5.1)
+    localhost (1.2.0)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -67,6 +68,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner-sequel (~> 2.0, >= 2.0.2)
+  localhost
   pg (~> 1.5)
   puma (~> 6.4, >= 6.4.2)
   rack-test (~> 2.1)

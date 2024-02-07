@@ -15,15 +15,8 @@ module LafindumoisBlog
 
         configure do
             set :server, %w[puma]
-           # set :port, 9494
-         #   set :default_content_type, 'application/json'
+            set :default_content_type, 'application/json'
         end
-
-        get '/' do
-            json "bonjour Lafindumois"
-            status 200
-        end
-
 
         namespace '/authors' do
 
@@ -44,6 +37,8 @@ module LafindumoisBlog
 
         end
 
-        
+        namespace '/articles' do
+        end
+
     end
 end

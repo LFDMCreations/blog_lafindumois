@@ -4,6 +4,7 @@ require_relative '../../app/main.rb'
 
 module LafindumoisBlog
     RSpec.describe 'Lafindumois blog api', type: :request do
+   #     include_context 'Reset class'
         it 'says hi!' do
             get '/'
             expect(last_response.status).to eq(200)
