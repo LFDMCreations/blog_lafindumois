@@ -1,7 +1,7 @@
-example_id                                 | status | run_time        |
------------------------------------------- | ------ | --------------- |
-./spec/requests/post_author_spec.rb[1:1:1] | passed | 0.00794 seconds |
-./spec/requests/post_author_spec.rb[1:1:2] | passed | 0.00022 seconds |
-./spec/requests/post_author_spec.rb[1:2:1] | passed | 0.00146 seconds |
-./spec/requests/post_author_spec.rb[1:2:2] | passed | 0.00017 seconds |
-./spec/requests/root_spec.rb[1:1]          | passed | 0.00492 seconds |
+example_id                                           | status | run_time        |
+---------------------------------------------------- | ------ | --------------- |
+./spec/actions/authors/add_password_spec.rb[1:1:1]   | passed | 0.00026 seconds |
+./spec/actions/authors/add_password_spec.rb[1:2:1]   | passed | 0.00196 seconds |
+./spec/requests/authors/author_signup_spec.rb[1:1:1] | passed | 0.00361 seconds |
+./spec/requests/authors/author_signup_spec.rb[1:2:1] | passed | 0.01827 seconds |
+./spec/requests/root_spec.rb[1:1]                    | passed | 0.01005 seconds |

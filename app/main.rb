@@ -2,9 +2,9 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/namespace'
 require 'sequel'
-
 require_relative './helpers/applicationhelpers'
-Dir['models'].each { |file| require file }
+require_relative './models/author.rb'
+#Dir['/models'].each { |file| require file }
 
 
 module LafindumoisBlog    
@@ -27,20 +27,19 @@ module LafindumoisBlog
 
         namespace '/authors' do
 
-            post '/new' do
-
-                #curl -X POST http://localhost:9292/authors/new -H "Content-Type: application/json" -d'{"name":"Jean","first_name":"","slug":"oups","email":"jdf@mail.fr"}'
-                
+            post '/signup' do
                 auteur = JSON.parse request.body.read
-
-                if auteur['first_name'] == "Jean"
+                begin
+                    saved_author = Author.create(auteur.deep_symbolize_keys)
                     status 200
-                    "ok"
-                else
-                    status 404
-                    "something went wrong"
+                    json :author => saved_author[:id]
+                rescue => exception
+                    status 402
+                    json :message => "something went wrong"
                 end
+            end
 
+            post '/login' do
             end
 
         end

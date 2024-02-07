@@ -296,38 +296,44 @@ Run the migrations for the development environment and for the test environment 
 
 ### Create models
 
-With this in place, we could start creating the `models`; but let's start writing a spec first, namely the spec for posting an author, i.e. create an author in the database. First do this in the database, because quite some constraints are there and we need to know what fields are required. Then, create a file `spec/request/post_author_spec.rb`. 
+With this in place, we can start creating the `models`. Create a folder `app/models` and add a first file: `author.rb` that contains only this: 
 
+```
+class Author < Sequel::Model
+end
+```
 
+Require this file in `app/main.rb`. 
 
+With this in place, open a terminal with `racksh` and enter only this: `Author.new`. This should return an instance of Author:
 
+```
+❯ racksh
+Rack::Shell v1.0.1 started in development environment.
+>> Author.new
+=> #<Author @values={}>
+```
 
-
-
-
+Wow, it works. :punch:
 
 ## Add a first author ##
 
 ### Start with the spec, ... ###
 
-Create a file in `./spec/requests/authors/index_spec.rb`. If you run the spec, it fails:
+Create a file in `./spec/requests/authors/post_author_spec.rb`.
+
+Have a look at the content of this file. It is quite simple: the requests sends json data to the server and there are 2 possibilities. Either the data is good and the author is created or the data is not good and the app can't create the author. 
+
+ If you run the spec, it fails:
 
 ```
-> bundle exec rspec spec/requests/authors/index_spec.rb
+> bundle exec rspec spec/requests/authors/author_signup_spec.rb
 ```
 
-Obviously, understand every line of the spec, namely the memoization `let(:authors) { app["persistence.rom"].relations[:authors] }` and the `before hook`.
+### ... and then create the route ###
 
-### ... and then continue with the action. ###
+Then add the namespace `/authors` to main.rb and the url `/signup`. A bit of explanation here. If we had created an `if... else` block, the API prints the error messages to the client. We don't want that. We want error messages, coming from the server or the database, to be printed in the server logs, but not sent to the client. Therefore, we need to catch the error. Do this with a `begin... rescue` block. 
 
-To make it pass, first add the route and the action with:
-```
-bundle exec hanami generate action authors.index --skip-view --url=/authors/all --http=get
-```
-
-As previously, this creates the route and action. See ` app/actions/authors/index.rb` and the Hanami guide to make the test pass. 
-
-If you check in the database with psql, you'll see that it is empty, thanks to database_cleaner and the around hook that it contains. After the test, the database is truncated.
 
 **Don't move to the next step as long as this test fails**
 
