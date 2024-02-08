@@ -18,6 +18,10 @@ module LafindumoisBlog
             set :default_content_type, 'application/json'
         end
 
+        get '/' do
+            status 200
+        end
+
         namespace '/authors' do
 
             post '/signup' do

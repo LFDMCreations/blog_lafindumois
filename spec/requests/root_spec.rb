@@ -2,7 +2,7 @@ require 'rack/test'
 require 'json'
 require_relative '../../app/main.rb'
 
-module LafindumoisBlog
+#module LafindumoisBlog
     RSpec.describe 'Lafindumois blog api', type: :request do
    #     include_context 'Reset class'
         it 'says hi!' do
@@ -12,4 +12,4 @@ module LafindumoisBlog
             #expect(last_response.body).to eq('bonjour Lafindumois')
         end
     end
-end
+#end

@@ -1,24 +1,21 @@
 require 'rack/test'
 require_relative '../../../app/models/author.rb'
 
-module LafindumoisBlog
-    class API
-        RSpec.describe Author do
 
-            let(:auteur) { Author.new }
+RSpec.describe Author do
 
-            context 'tout va bien' do
-                it 'says all is good' do
-                    expect(auteur.essaie('oui')).to eq('ça va')
-                end
-            end
+    let(:auteur) { Author.new }
 
-            context 'il y a souci en la demeure' do
-                it 'says there is a problem' do
-                    expect(auteur.essaie('non')).to eq('aie')
-                end
-            end
-
+    context 'tout va bien' do
+        it 'says all is good' do
+            expect(auteur.essaie('oui')).to eq('ça va')
         end
-    end    
+    end
+
+    context 'il y a souci en la demeure' do
+        it 'says there is a problem' do
+            expect(auteur.essaie('non')).to eq('aie')
+        end
+    end
+
 end
