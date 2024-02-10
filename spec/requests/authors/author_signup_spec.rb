@@ -2,12 +2,10 @@ require 'rack/test'
 require 'json'
 require_relative '../../../app/main.rb'
 
-
 RSpec.describe 'An author creates an account', type: :request do
 
     def post_request(data)
         post '/authors/signup', data.to_json, {"HTTP_ACCEPT" => "app/json", "CONTENT_TYPE" => "app/json"}
-        last_response
     end
 
     context 'and succeeds' do

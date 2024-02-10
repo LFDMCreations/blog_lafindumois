@@ -322,9 +322,43 @@ Wow, it works. :punch:
 
 Create a file in `./spec/requests/authors/post_author_spec.rb`.
 
+It now contains:
+
+```
+require 'rack/test'
+require 'json'
+require_relative '../../../app/main.rb'
+
+RSpec.describe 'An author creates an account', type: :request do
+
+    def post_request(data)
+        post '/authors/signup', data.to_json, {"HTTP_ACCEPT" => "app/json", "CONTENT_TYPE" => "app/json"}
+    end
+
+    context 'and succeeds' do
+        it 'returns the author id' do
+            post_request({'name' => 'Fleurette', 'first_name' => 'Jean', 'slug' => 'Jean_de_Fleurette', 'email' => 'jdf@mail.fr' })
+            expect(last_response.status).to eq(200)
+            parsed = JSON.parse(last_response.body)
+            expect(parsed).to include('author' => a_kind_of(Integer))
+        end
+    end
+
+    context 'but fails' do
+        it 'returns an error message' do
+            post_request({ 'name' => nil, 'first_name' => nil, 'slug' => 'Jeanno_de_Fleurette', 'email' => 'jrdf@mail.fr' })
+            expect(last_response.status).to eq(402)
+            parsed = JSON.parse(last_response.body)
+            expect(parsed).to include('message' => 'something went wrong')
+        end
+    end
+end
+
+```
+
 Have a look at the content of this file. It is quite simple: the requests sends json data to the server and there are 2 possibilities. Either the data is good and the author is created or the data is not good and the app can't create the author. 
 
- If you run the spec, it fails:
+ If you run the spec, it fails since we haven't even creates a route `/authors/signup` in `main.rb`. 
 
 ```
 > bundle exec rspec spec/requests/authors/author_signup_spec.rb
@@ -332,9 +366,98 @@ Have a look at the content of this file. It is quite simple: the requests sends 
 
 ### ... and then create the route ###
 
-Then add the namespace `/authors` to main.rb and the url `/signup`. A bit of explanation here. If we had created an `if... else` block, the API prints the error messages to the client. We don't want that. We want error messages, coming from the server or the database, to be printed in the server logs, but not sent to the client. Therefore, we need to catch the error. Do this with a `begin... rescue` block. 
+Then add the namespace `/authors` to main.rb and the url `/signup`. For the time being, this is the code: 
+
+```
+        namespace '/authors' do
+            post '/signup' do
+                auteur = JSON.parse request.body.read
+                begin
+                    saved_author = Author.create(auteur.deep_symbolize_keys)
+                    status 200
+                    json :author => saved_author[:id]
+                rescue => exception
+                    status 402
+                    json :message => "something went wrong"
+                end
+            end
+        end
+
+```
+
+A bit of explanation here. If we had created an `if... else` block, the API prints the server's error messages to the client. We don't want that. We want error messages, coming from the server or the database, to be printed in the server logs, but not sent to the client. Therefore, we need to catch the error. Do this with a `begin... rescue` block. 
 
 
 **Don't move to the next step as long as this test fails**
 
+### Add a password for the newly created author. ###
 
+As you can see, the newly created author doesn't have a password defined yet. Passwords are stored in a seperate table and passwords are encrypted. Let's use `bcrypt` for that. We must also reflect the `one_to_one` relation between `Author` and `AuthorPassword`. Read the page on [Sequel associations](https://sequel.jeremyevans.net/rdoc/files/doc/association_basics_rdoc.html) for a solid understanding of this. 
+
+Like always, let's first create the test. But what are we testing? Not the request yet, first the functionality of adding a password to a User. Therefore, start with creating a file: `spec/actions/authors/add_password_spec.rb`. Just to make sure that the tests have access to the User class, we can create a very simple 'dummy' spec:
+
+```
+require 'rack/test'
+# require author.rb, not main.rb since we're not testing a route :
+require_relative '../../../app/models/author.rb'
+
+RSpec.describe Author do
+    let(:auteur) { Author.new }
+    context 'tout va bien' do
+        it 'says all is good' do
+            expect(auteur.essaie('oui')).to eq('ça va')
+        end
+    end
+    context 'il y a souci en la demeure' do
+        it 'says there is a problem' do
+            expect(auteur.essaie('non')).to eq('aie')
+        end
+    end
+end
+
+```
+
+And then, in `app/models/author.rb` add this method `essaie` that answers differently according to the value of the argument. 
+
+```
+def essaie(quoi)
+    if quoi === "oui"
+        "ça va"            
+    else
+        "aie"
+    end
+end
+```
+
+If you run this spec, it should pass. 
+
+
+
+
+Start with a barebone:
+
+```
+require 'rack/test'
+require 'json'
+require_relative '../../../app/main.rb'
+
+RSpec.describe 'Add a password to the user', type: :request do
+
+    context 'successfully' do
+    end
+
+    context 'but fails' do
+    end
+
+end
+```
+
+This test passes logically, since we didn't actually test anything ("No examples found").
+
+Since `main.rb` requires the files in the `models` directory, we have access to the Models. Add this line before the first `context` :
+
+```
+ let(:author) { Author.create({'name' => 'Fleurette', 'first_name' => 'Jean', 'slug' => 'Jean_de_Fleurette', 'email' => 'jdf@mail.fr' }) }
+```
+
+Lovely way of memoization :heart:. 

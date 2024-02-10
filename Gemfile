@@ -7,6 +7,7 @@ gem "sinatra", "~> 4.0"
 gem 'sinatra-contrib', '~> 4.0'
 gem "pg", "~> 1.5"
 gem "sequel", "~> 5.77"
+gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
 gem "rackup", "~> 2.1"
 
