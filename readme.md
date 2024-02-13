@@ -429,9 +429,7 @@ def essaie(quoi)
 end
 ```
 
-If you run this spec, it should pass. 
-
-
+If you run this spec, it should pass. If it doesn't, make it pass. Then remove the method `essaie ` and the entire `RSpec.describe Author` block. And start the serious test.
 
 
 Start with a barebone:
@@ -452,7 +450,7 @@ RSpec.describe 'Add a password to the user', type: :request do
 end
 ```
 
-This test passes logically, since we didn't actually test anything ("No examples found").
+This test passes logically, since we didn't actually test anything ("No examples found"). It will fail if we replace 'Add a password to the user' with : `'#add_password'` because then the spec is expecting an instance method called add_password.
 
 Since `main.rb` requires the files in the `models` directory, we have access to the Models. Add this line before the first `context` :
 
@@ -460,4 +458,24 @@ Since `main.rb` requires the files in the `models` directory, we have access to 
  let(:author) { Author.create({'name' => 'Fleurette', 'first_name' => 'Jean', 'slug' => 'Jean_de_Fleurette', 'email' => 'jdf@mail.fr' }) }
 ```
 
-Lovely way of memoization :heart:. 
+Lovely way of memoization :heart:
+
+Within the `successfully` context, we can now add: 
+
+```
+    it 'returns true' do
+        expect(author.add_password(author)).to be_truthy
+    end
+```
+
+Run the test and admire it fail. We can add the instance method to the class `Author` in the most simple manner:
+
+```
+    def add_password(author)
+      true
+    end
+```
+
+The test should pass now. If you want to make sure that author is passed to the method, try to echo `author.name` by adding ` puts author.name` before the `true` line. 
+
+Since this test passes, we can now start to add a password to the author, leveraging the relation between Author and AuthorPassword and the `bcrypt` gem. :yum:

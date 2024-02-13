@@ -5,12 +5,8 @@ class Author < Sequel::Model
     #     errors.add(:first_namename, "can't be empty") if first_name.empty?
     # end
 
-    def essaie(quoi)
-        if quoi === "oui"
-            "ça va"            
-        else
-            "aie"
-        end
+    def add_password(author)
+      true
     end
 
 end

@@ -1,16 +1,22 @@
 require 'rack/test'
 require_relative '../../../app/models/author.rb'
 
-RSpec.describe Author do
-    let(:auteur) { Author.new }
-    context 'tout va bien' do
-        it 'says all is good' do
-            expect(auteur.essaie('oui')).to eq('ça va')
+RSpec.describe '#add_password' do
+
+    let(:author) { Author.create({
+        'name' => 'Fleurette', 
+        'first_name' => 'Jean', 
+        'slug' => 'Jean_de_Fleurette', 
+        'email' => 'jdf@mail.fr' 
+    })}
+
+    context 'successfully' do
+        it 'returns true' do
+            expect(author.add_password(author)).to be_truthy
         end
     end
-    context 'il y a souci en la demeure' do
-        it 'says there is a problem' do
-            expect(auteur.essaie('non')).to eq('aie')
-        end
+
+    context 'but fails' do
     end
+
 end

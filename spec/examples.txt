@@ -1,7 +1,6 @@
 example_id                                                       | status | run_time        |
 ---------------------------------------------------------------- | ------ | --------------- |
-./spec/actions/authors/author_action_add_password_spec.rb[1:1:1] | passed | 0.00028 seconds |
-./spec/actions/authors/author_action_add_password_spec.rb[1:2:1] | passed | 0.00025 seconds |
+./spec/actions/authors/author_action_add_password_spec.rb[1:1:1] | passed | 0.0049 seconds  |
 ./spec/requests/authors/author_request_signup_spec.rb[1:1:1]     | passed | 0.00979 seconds |
 ./spec/requests/authors/author_request_signup_spec.rb[1:2:1]     | passed | 0.00236 seconds |
 ./spec/requests/root_spec.rb[1:1]                                | passed | 0.0142 seconds  |
