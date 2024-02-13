@@ -3,7 +3,7 @@ require_relative "../../config/config"
 
 # Hanami.app.prepare(:persistence)
 # DatabaseCleaner[:sequel, db: Hanami.app["persistence.db"]]
-DatabaseCleaner[:sequel].db = Sequel.connect('postgres://thiebo@localhost/lafindumois_blog_test')
+DatabaseCleaner[:sequel].db = Sequel.connect('postgres://lafindumois_development@localhost/lafindumois_blog_test')
 
 RSpec.configure do |config|
   config.before(:suite) do
