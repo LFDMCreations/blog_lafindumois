@@ -1,1 +1,3 @@
-require_relative 'persistence.rb'
+# frozen_string_literal: true
+
+require_relative 'persistence'

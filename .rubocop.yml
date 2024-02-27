@@ -1,0 +1,9 @@
+require:
+  - rubocop-rspec
+  - rubocop-sequel
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'spec/support/*'
+    - 'db/migrations/*'

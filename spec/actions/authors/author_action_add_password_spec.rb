@@ -1,22 +1,31 @@
+# frozen_string_literal: true
+
 require 'rack/test'
-require_relative '../../../app/models/author.rb'
+require_relative '../../../app/models/author'
 
-RSpec.describe '#add_password' do
+RSpec.describe Author do
+  def create_author(slug, email)
+    Author.create({
+                    'name' => 'Fleurette',
+                    'first_name' => 'Jean',
+                    'slug' => slug,
+                    'email' => email
+                  })
+  end
 
-    let(:author) { Author.create({
-        'name' => 'Fleurette', 
-        'first_name' => 'Jean', 
-        'slug' => 'Jean_de_Fleurette', 
-        'email' => 'jdf@mail.fr' 
-    })}
-
-    context 'successfully' do
-        it 'returns true' do
-            expect(author.add_password(author)).to be_truthy
-        end
+  context 'when a password is provided' do
+    example 'that is valid' do
+      author = create_author('unauteur', 'unauteur@moi.fr')
+      expect(author.add_password(author, 'fqsFF(3jjD!)')).to be_a AuthorPassword
     end
 
-    context 'but fails' do
+    example 'that is unvalid' do
+      author = create_author('deuxauteur', 'deuxauteur@moi.fr')
+      expect(author.add_password(author, 'fqsFFsfghdfjj')).to be_falsy
     end
-
+  end
+  #
+  #     context 'password creation fails' do
+  #         expect(author.add_password(author, 'qlsgkqdsgGF')).to be_falsy
+  #     end
 end

@@ -1,6 +1,9 @@
-example_id                                                       | status | run_time        |
----------------------------------------------------------------- | ------ | --------------- |
-./spec/actions/authors/author_action_add_password_spec.rb[1:1:1] | passed | 0.0049 seconds  |
-./spec/requests/authors/author_request_signup_spec.rb[1:1:1]     | passed | 0.00979 seconds |
-./spec/requests/authors/author_request_signup_spec.rb[1:2:1]     | passed | 0.00236 seconds |
-./spec/requests/root_spec.rb[1:1]                                | passed | 0.0142 seconds  |
+example_id                                                         | status | run_time        |
+------------------------------------------------------------------ | ------ | --------------- |
+./spec/actions/authors/author_action_add_password_spec.rb[1:1:1]   | passed | 0.24905 seconds |
+./spec/actions/authors/author_action_add_password_spec.rb[1:1:2]   | passed | 0.0031 seconds  |
+./spec/requests/authors/author_request_add_password_spec.rb[1:1:1] | passed | 0.25486 seconds |
+./spec/requests/authors/author_request_add_password_spec.rb[1:2:1] | failed | 0.00658 seconds |
+./spec/requests/authors/author_request_signup_spec.rb[1:1:1]       | passed | 0.01062 seconds |
+./spec/requests/authors/author_request_signup_spec.rb[1:2:1]       | passed | 0.0012 seconds  |
+./spec/requests/root_spec.rb[1:1]                                  | passed | 0.00605 seconds |
