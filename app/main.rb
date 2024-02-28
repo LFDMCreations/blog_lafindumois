@@ -50,13 +50,12 @@ module LafindumoisBlog
           data = JSON.parse request.body.read
           data = data.deep_symbolize_keys
           author = Author[data[:author]]
-          begin
-            message = author.add_password(author, data[:password])
+          if author.add_password(author, data[:password])
             status 200
-            json message: message
-          rescue => exception
-            status 402
-            json error: exception
+            json message: "success"
+          else
+             status 402
+            json error: "invalid password"
           end
         end
 

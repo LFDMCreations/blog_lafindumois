@@ -28,7 +28,8 @@ RSpec.describe 'Create a password for an author', type: :request do
         password: nil
       }
       post '/authors/password/add', data.to_json, { 'HTTP_ACCEPT' => 'app/json', 'CONTENT_TYPE' => 'app/json' }
-      expect(last_response.body).to eq('bonjour')
+      response_body = JSON.parse(last_response.body)
+      expect(response_body).to eq('error' => 'invalid password')
     end
   end
 end
